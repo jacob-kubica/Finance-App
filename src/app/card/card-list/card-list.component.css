@@ -1,22 +1,62 @@
 :host {
-    display: block;
-    margin-top: 1rem;
-  }
-  
-  mat-spinner {
-    margin: auto;
-  }
-  
-  .info-text {
-    text-align: center;
-  }
-  
-  .post-image {
-    width: 100%;
-  }
-  
-  .post-image img {
-    width: 50%;
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
-  }
-  
+  display: block;
+  margin-top: 1rem;
+}
+
+mat-spinner {
+  margin: auto;
+}
+
+.info-text {
+  text-align: center;
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-image img {
+  width: 80%;
+
+  object-fit: fill;
+  display: block;
+}
+
+
+mat-card {
+  margin: 1em 0 1em 0;
+}
+
+
+.values {
+  margin-top: 1em;
+}
+
+
+.card-content-align {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.header-tile>mat-card {
+  width: 80%;
+}
+
+.wide-card {
+  width: 80%;
+
+}
+
+span {
+  margin-right: 1em;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}

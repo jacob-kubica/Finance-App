@@ -1,9 +1,15 @@
 <mat-toolbar color="primary">
   <span>
-    <a routerLink="/">MyMessages</a>
+    <a routerLink="/">Posts</a>
   </span>
   <span>
-    <a routerLink="card">MyCards</a>
+    <a routerLink="card">Cards</a>
+  </span>
+  <span>
+    <a routerLink="bill">Bills</a>
+  </span>
+  <span>
+    <a routerLink="account">Accounts</a>
   </span>
   <span class="spacer"></span>
   <ul>
@@ -14,6 +20,16 @@
   <ul>
     <li>
       <a mat-button routerLink="card/create" routerLinkActive="mat-accent">New Card</a>
+    </li>
+  </ul>
+  <ul>
+    <li>
+      <a mat-button routerLink="bill/create" routerLinkActive="mat-accent">New Bill</a>
+    </li>
+  </ul>
+  <ul>
+    <li>
+      <a mat-button routerLink="account/create" routerLinkActive="mat-accent">New Account</a>
     </li>
   </ul>
 </mat-toolbar>

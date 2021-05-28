@@ -1,0 +1,22 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<mat-accordion multi="true" *ngIf="accounts.length > 0 && !isLoading">
+  <mat-expansion-panel *ngFor="let account of accounts">
+    <mat-expansion-panel-header>
+      {{ account.title }}
+    </mat-expansion-panel-header>
+    <div class="account-image">
+      <img [src]="account.imagePath" [alt]="account.title">
+    </div>
+    <p>name is {{ account.name }}</p>
+    <p>description is {{ account.description }}</p>
+    <p>interest is {{ account.interest }}</p>
+    <p>limit is {{ account.limit }}</p>
+    <p>institution is {{ account.institution}}</p>
+    <p>balance is {{ account.balance}}</p>
+    <mat-action-row>
+      <a mat-button color="primary" [routerLink]="['/account/edit', account.id]">EDIT</a>
+      <button mat-button color="warn" (click)="onDelete(account.id)">DELETE</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>
+<p class="info-text mat-body-1" *ngIf="accounts.length <= 0 && !isLoading">No accounts added yet!</p>
