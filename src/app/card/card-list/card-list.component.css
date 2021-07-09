@@ -7,56 +7,22 @@ mat-spinner {
   margin: auto;
 }
 
-.info-text {
-  text-align: center;
+
+.fincard {
+  margin: 3px;
+  display: inline-block;
 }
 
-.card-image {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.fincard__image {
+  width: 400px;
+  height: 252px;
 }
 
-.card-image img {
-  width: 80%;
-
-  object-fit: fill;
-  display: block;
+.fincard__description {
+  width: 400px;
 }
 
-
-mat-card {
-  margin: 1em 0 1em 0;
-}
-
-
-.values {
-  margin-top: 1em;
-}
-
-
-.card-content-align {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-
-.header-tile>mat-card {
-  width: 80%;
-}
-
-.wide-card {
-  width: 80%;
-
-}
-
-span {
-  margin-right: 1em;
-}
-
-.spacer {
-  flex: 1 1 auto;
+.fincard__info {
+  list-style: none;
+  text-align: left;
 }

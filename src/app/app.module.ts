@@ -5,6 +5,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import {
   MatInputModule,
+  MatIconModule,
   MatCardModule,
   MatButtonModule,
   MatToolbarModule,
@@ -31,6 +32,8 @@ import { BillListComponent } from './bills/bill-list/bill-list.component';
 import { AccountComponent } from './accounts/account.component';
 import { AccountCreateComponent } from './accounts/account-create/account-create.component';
 import { AccountListComponent } from './accounts/account-list/account-list.component';
+import { CardRepaymentComponent } from './card/card-repayment/card-repayment.component';
+import { CardInputsComponent } from './card/card-inputs/card-inputs.component';
 
 
 @NgModule({
@@ -46,7 +49,9 @@ import { AccountListComponent } from './accounts/account-list/account-list.compo
     BillListComponent,
     AccountComponent,
     AccountCreateComponent,
-    AccountListComponent
+    AccountListComponent,
+    CardRepaymentComponent,
+    CardInputsComponent
   ],
   imports: [
     BrowserModule,
@@ -63,6 +68,7 @@ import { AccountListComponent } from './accounts/account-list/account-list.compo
     MatGridListModule,
     MatDividerModule,
     MatListModule,
+    MatIconModule,
     HttpClientModule
   ],
   providers: [],

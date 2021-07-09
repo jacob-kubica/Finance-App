@@ -1,0 +1,18 @@
+.valcard {
+  display: inline-block;
+}
+
+.valcard__value {
+  width: 250px;
+  text-align: center;
+  display: inline-block;
+}
+
+.valcard__inputs {
+  border: 5px black;
+}
+
+.valcard__inputs mat-form-field {
+  width: 250px;
+  margin: 25px;
+}

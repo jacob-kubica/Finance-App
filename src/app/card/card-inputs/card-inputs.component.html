@@ -1,0 +1,122 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Calculated Values</mat-card-title>
+        <mat-card-subtitle>Displays information applicable to all the cards</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content class="valcard">
+      <div class='valcard__inputs'>
+        <mat-form-field  floatLabel="always">
+          <mat-label>Monthly Payment</mat-label>
+          <input
+          [(ngModel)]="monthlyPayment" 
+          matInput 
+          type="number" 
+          class="example-right-align" 
+          (change)="calculateInputPayment()"
+          placeholder="0">
+          <span matPrefix>$&nbsp;</span>
+          <span matSuffix></span>
+        </mat-form-field>
+        <mat-form-field  floatLabel="always">
+          <mat-label>Net Monthly Income</mat-label>
+          <input 
+          [(ngModel)]="netMonthlyIncome" 
+          matInput 
+          type="number"
+          (change)="calculuateInputs()"
+          value="netMonthlyIncome"
+          class="example-right-align" 
+          placeholder="0">
+          <span matPrefix>$&nbsp;</span>
+          <span matSuffix>.00</span>
+        </mat-form-field>
+        <mat-form-field   floatLabel="always">      <mat-label>Amount</mat-label>
+          <input 
+          matInput 
+          [ngModel]="amount | number : '1.2'" 
+          (ngModelChange)="amount=$event"
+          type="number" 
+          (change)="calculateInputAmount()"
+          class="example-right-align" 
+          placeholder="0">
+          <span matPrefix>%</span>
+          <span matSuffix></span>
+        </mat-form-field>
+      </div>
+      <!-- Utilization -->
+      <mat-card class="valcard__value">
+        <mat-card-header>
+          <mat-card-title>Utilization</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="card-content-align">
+          <h2>{{this.utilization  | percent}}</h2>
+        </mat-card-content>
+      
+      
+      </mat-card>
+      <!-- Total Balance -->
+      <mat-card class="valcard__value">
+        <mat-card-header>
+          <mat-card-title>Total Balance</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="card-content-align">
+          <h2>{{this.totalBalance  | currency:'CAD' }}</h2>
+        </mat-card-content>
+      </mat-card>
+      <!-- Total Limit -->
+      <mat-card class="valcard__value">
+        <mat-card-header>
+          <mat-card-title>Total Limit</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="card-content-align">
+          <h2>{{this.totalLimit  | currency:'CAD' }}</h2>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="valcard__value">
+        <mat-card-header>
+          <mat-card-title>Interest</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="card-content-align">
+          <h2>{{this.estimatedInterest  | currency:'CAD' }}</h2>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="valcard__value">
+        <mat-card-header>
+          <mat-card-title>Number of Payments</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="card-content-align">
+          <h2>{{this.number_of_payments_snowball}} </h2>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="valcard__value">
+        <mat-card-header>
+          <mat-card-title>Payoff Date</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="card-content-align">
+          <h2>{{this.payoff_date}} </h2>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="valcard__value">
+        <mat-card-header>
+          <mat-card-title>Total Interest</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="card-content-align">
+          <h2>{{this.total_interest | currency:'CAD' }} </h2>
+        </mat-card-content>
+      </mat-card>
+      </mat-card-content>
+
+
+
+
+
+</mat-card>
+
+
+
+
+
+
+
+
+
