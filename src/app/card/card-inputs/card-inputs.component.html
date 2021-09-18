@@ -1,48 +1,59 @@
-<mat-card>
+<mat-card class="input_card">
+  <mat-card-header>
+    <mat-card-title>Inputted Values</mat-card-title>
+    <mat-card-subtitle>Information is only used for calculations</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div class='valcard__inputs'>
+      <mat-form-field  floatLabel="always">
+        <mat-label>Monthly Payment</mat-label>
+        <input
+        [(ngModel)]="monthlyPayment" 
+        matInput 
+        type="number" 
+        class="example-right-align" 
+        (change)="calculateInputPayment()"
+        placeholder="0">
+        <span matPrefix>$&nbsp;</span>
+        <span matSuffix></span>
+      </mat-form-field>
+      <mat-form-field  floatLabel="always">
+        <mat-label>Net Monthly Income</mat-label>
+        <input 
+        [(ngModel)]="netMonthlyIncome" 
+        matInput 
+        type="number"
+        (change)="calculuateInputs()"
+        value="netMonthlyIncome"
+        class="example-right-align" 
+        placeholder="0">
+        <span matPrefix>$&nbsp;</span>
+        <span matSuffix>.00</span>
+      </mat-form-field>
+      <mat-form-field   floatLabel="always">      <mat-label>Amount</mat-label>
+        <input 
+        matInput 
+        [ngModel]="amount | number : '1.2'" 
+        (ngModelChange)="amount=$event"
+        type="number" 
+        (change)="calculateInputAmount()"
+        class="example-right-align" 
+        placeholder="0">
+        <span matPrefix>%</span>
+        <span matSuffix></span>
+      </mat-form-field>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+
+
+<mat-card class="val_card">
     <mat-card-header>
         <mat-card-title>Calculated Values</mat-card-title>
         <mat-card-subtitle>Displays information applicable to all the cards</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content class="valcard">
-      <div class='valcard__inputs'>
-        <mat-form-field  floatLabel="always">
-          <mat-label>Monthly Payment</mat-label>
-          <input
-          [(ngModel)]="monthlyPayment" 
-          matInput 
-          type="number" 
-          class="example-right-align" 
-          (change)="calculateInputPayment()"
-          placeholder="0">
-          <span matPrefix>$&nbsp;</span>
-          <span matSuffix></span>
-        </mat-form-field>
-        <mat-form-field  floatLabel="always">
-          <mat-label>Net Monthly Income</mat-label>
-          <input 
-          [(ngModel)]="netMonthlyIncome" 
-          matInput 
-          type="number"
-          (change)="calculuateInputs()"
-          value="netMonthlyIncome"
-          class="example-right-align" 
-          placeholder="0">
-          <span matPrefix>$&nbsp;</span>
-          <span matSuffix>.00</span>
-        </mat-form-field>
-        <mat-form-field   floatLabel="always">      <mat-label>Amount</mat-label>
-          <input 
-          matInput 
-          [ngModel]="amount | number : '1.2'" 
-          (ngModelChange)="amount=$event"
-          type="number" 
-          (change)="calculateInputAmount()"
-          class="example-right-align" 
-          placeholder="0">
-          <span matPrefix>%</span>
-          <span matSuffix></span>
-        </mat-form-field>
-      </div>
       <!-- Utilization -->
       <mat-card class="valcard__value">
         <mat-card-header>
@@ -72,6 +83,7 @@
           <h2>{{this.totalLimit  | currency:'CAD' }}</h2>
         </mat-card-content>
       </mat-card>
+      <!-- Interest -->
       <mat-card class="valcard__value">
         <mat-card-header>
           <mat-card-title>Interest</mat-card-title>
@@ -80,6 +92,7 @@
           <h2>{{this.estimatedInterest  | currency:'CAD' }}</h2>
         </mat-card-content>
       </mat-card>
+      <!-- Number of Payments -->
       <mat-card class="valcard__value">
         <mat-card-header>
           <mat-card-title>Number of Payments</mat-card-title>
@@ -88,6 +101,7 @@
           <h2>{{this.number_of_payments_snowball}} </h2>
         </mat-card-content>
       </mat-card>
+      <!-- Payoff Date -->
       <mat-card class="valcard__value">
         <mat-card-header>
           <mat-card-title>Payoff Date</mat-card-title>
@@ -96,6 +110,7 @@
           <h2>{{this.payoff_date}} </h2>
         </mat-card-content>
       </mat-card>
+      <!-- Total Interest -->
       <mat-card class="valcard__value">
         <mat-card-header>
           <mat-card-title>Total Interest</mat-card-title>
@@ -104,12 +119,30 @@
           <h2>{{this.total_interest | currency:'CAD' }} </h2>
         </mat-card-content>
       </mat-card>
-      </mat-card-content>
+    </mat-card-content>
+</mat-card>
 
 
 
 
-
+<mat-card class="valcard__chart">
+  <mat-card-header>
+    <mat-card-title>Pay Down Chart</mat-card-title>
+    <mat-card-subtitle>subtitle</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content >
+    <div class="chart-wrapper">
+      <canvas baseChart 
+          [datasets]="lineChartData" 
+          [labels]="lineChartLabels" 
+          [options]="lineChartOptions"
+          [colors]="lineChartColors" 
+          [legend]="lineChartLegend" 
+          [chartType]="lineChartType" 
+          [plugins]="lineChartPlugins">
+      </canvas>
+  </div>
+  </mat-card-content>
 </mat-card>
 
 

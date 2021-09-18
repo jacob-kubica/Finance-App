@@ -2,44 +2,52 @@
 
 <app-card-inputs></app-card-inputs>
 
-<mat-card class="fincard" *ngFor="let card of cards">
-  <!-- Display Identifying Information Of Financial Account -->
+<mat-card>
   <mat-card-header>
-    <mat-card-title>{{ card.title }}</mat-card-title>
-    <mat-card-subtitle>{{ card.institution}}</mat-card-subtitle>
+    <mat-card-title>Cards</mat-card-title>
+    <mat-card-subtitle>Input Your Cards</mat-card-subtitle>
   </mat-card-header>
-  <!-- Display Card (Should be SVG) -->
-  <!-- Display Card Content -->
-  <mat-card-content>
-    <img class="fincard__image" mat-card-image  [src]="card.imagePath" [alt]="card.title">
-    <ul dense class='fincard__info'>
-      <li class='fincard__info__item'>
-        <mat-icon matListIcon>calendar_today</mat-icon>
-        Due on {{ card.dueDate | date : 'fullDate'}}
-      </li>
-      <li>
-        <mat-icon matListIcon>account_balance_wallet</mat-icon>
-        {{ card.balance | currency:'CAD' }} balance
-      </li>
-      <li>
-        <mat-icon matListIcon>credit_card</mat-icon>
-        {{ card.limit | currency:'CAD' }} limit
-      </li>
-      <li>
-        <mat-icon matListIcon>pie_chart</mat-icon>
-        {{ card.balance / card.limit | percent }} utilization
-      </li>
-      <li>
-        <mat-icon matListIcon>monetization_on</mat-icon>
-        {{ card.interest | percent }} interest
-      </li>
-    </ul>
-
+  <mat-card-content class="fincard__display">
+    <mat-card class="fincard" *ngFor="let card of cards">
+      <!-- Display Identifying Information Of Financial Account -->
+      <mat-card-header>
+        <mat-card-title>{{ card.title }}</mat-card-title>
+        <mat-card-subtitle>{{ card.institution}}</mat-card-subtitle>
+      </mat-card-header>
+      <!-- Display Card (Should be SVG) -->
+      <!-- Display Card Content -->
+      <mat-card-content>
+        <img class="fincard__image" mat-card-image  [src]="card.imagePath" [alt]="card.title">
+        <ul dense class='fincard__info'>
+          <li class='fincard__info__item'>
+            <mat-icon matListIcon>calendar_today</mat-icon>
+            Due on {{ card.dueDate | date : 'fullDate'}}
+          </li>
+          <li>
+            <mat-icon matListIcon>account_balance_wallet</mat-icon>
+            {{ card.balance | currency:'CAD' }} balance
+          </li>
+          <li>
+            <mat-icon matListIcon>credit_card</mat-icon>
+            {{ card.limit | currency:'CAD' }} limit
+          </li>
+          <li>
+            <mat-icon matListIcon>pie_chart</mat-icon>
+            {{ card.balance / card.limit | percent }} utilization
+          </li>
+          <li>
+            <mat-icon matListIcon>monetization_on</mat-icon>
+            {{ card.interest | percent }} interest
+          </li>
+        </ul>
+      </mat-card-content>
+      <!-- Footer Buttons -->  
+      <mat-card-actions class="fincard__actions">
+        <a mat-raised-button color="primary" [routerLink]="['/card/edit', card.id]">EDIT</a>
+        <button mat-raised-button color="warn" (click)="onDelete(card.id)">DELETE</button>
+      </mat-card-actions>
+    </mat-card>
   </mat-card-content>
-  <!-- Footer Buttons -->  
-  <mat-card-actions class="fincard__actions">
-    <a mat-raised-button color="primary" [routerLink]="['/card/edit', card.id]">EDIT</a>
-    <button mat-raised-button color="warn" (click)="onDelete(card.id)">DELETE</button>
-  </mat-card-actions>
 </mat-card>
+
 <p class="info-text mat-body-1" *ngIf="cards.length <= 0 && !isLoading">No cards added yet!</p>

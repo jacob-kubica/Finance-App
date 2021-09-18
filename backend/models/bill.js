@@ -7,10 +7,10 @@ const billSchema = mongoose.Schema({
   description: { type: String },
   interest: { type: Number, default: 1 },
   limit: { type: Number },
-  dueDate: {type: Date, default: Date.now},
-  institution: {type: String},
-  balance: {type: Number},
-  imagePath: { type: String, required: true }
+  dueDate: { type: Date, default: Date.now },
+  institution: { type: String },
+  balance: { type: Number },
+  imagePath: { type: String, required: true },
 });
 
 module.exports = mongoose.model("Bill", billSchema);

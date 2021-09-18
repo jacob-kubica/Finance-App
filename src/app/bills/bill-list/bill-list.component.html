@@ -1,31 +1,18 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
 <mat-accordion multi="true" *ngIf="bills.length > 0 && !isLoading">
   <mat-expansion-panel *ngFor="let bill of bills">
-
     <mat-expansion-panel-header>
       {{ bill.title }}
     </mat-expansion-panel-header>
-    <mat-card>
-      <div class="bill-image">
-        <img [src]="bill.imagePath" [alt]="bill.title">
-      </div>
-    </mat-card>
-
-    <mat-card>
-      <p>{{ bill.institution}}</p>
-      <p>Due on {{ bill.dueDate | date : 'fullDate'}}</p>
-      <p>{{ bill.interest | percent }} interest</p>
-    </mat-card>
-    
-    <mat-card>
-      <p>{{ bill.balance | currency:'CAD' }} balance</p>
-      <p>{{ bill.limit | currency:'CAD' }} limit</p>
-    </mat-card>
-
-    <mat-card>
-      <p>{{ bill.description }}</p>
-    </mat-card>
-
+    <div class="bill-image">
+      <img [src]="bill.imagePath" [alt]="bill.title">
+    </div>
+    <div>{{ bill.institution}}</div>
+    <ul>
+      <li>Due on {{ bill.dueDate | date : 'fullDate'}}</li>
+      <li>{{bill.balance}}</li>
+      <li>{{ bill.description }}</li>
+    </ul>
     <mat-action-row>
       <a mat-button color="primary" [routerLink]="['/bill/edit', bill.id]">EDIT</a>
       <button mat-button color="warn" (click)="onDelete(bill.id)">DELETE</button>

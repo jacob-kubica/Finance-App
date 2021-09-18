@@ -1,18 +1,63 @@
 .valcard {
-  display: inline-block;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 1em;
 }
 
+.val_card {
+  align-items: center;
+
+}
+
+
 .valcard__value {
-  width: 250px;
   text-align: center;
-  display: inline-block;
 }
 
 .valcard__inputs {
-  border: 5px black;
+  display: flex;
 }
 
 .valcard__inputs mat-form-field {
-  width: 250px;
-  margin: 25px;
+  margin-left: 1em;
+  margin-right: 1em;
+  flex: 1;
+}
+
+
+.valcard__chart {
+  margin: 1em;
+}
+
+.input_card {
+  margin-bottom: 1em;
+}
+
+/* min content */
+/* max content */
+
+
+
+@media (min-aspect-ratio: 1/5) {
+  .valcard {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-aspect-ratio: 3/5) {
+  .valcard {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media (min-aspect-ratio: 5/5) {
+  .valcard {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+
+@media (min-aspect-ratio: 8/5) {
+  .valcard {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  }
 }

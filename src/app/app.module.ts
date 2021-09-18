@@ -16,6 +16,9 @@ import {
   MatDividerModule
 } from '@angular/material';
 
+import { ChartsModule } from 'ng2-charts';
+
+
 import { AppComponent } from './app.component';
 import { PostCreateComponent } from './posts/post-create/post-create.component';
 import { HeaderComponent } from './header/header.component';
@@ -34,6 +37,12 @@ import { AccountCreateComponent } from './accounts/account-create/account-create
 import { AccountListComponent } from './accounts/account-list/account-list.component';
 import { CardRepaymentComponent } from './card/card-repayment/card-repayment.component';
 import { CardInputsComponent } from './card/card-inputs/card-inputs.component';
+import { BarChartComponent } from './charts/bar-chart/bar-chart.component';
+import { BubbleChartComponent } from './charts/bubble-chart/bubble-chart.component';
+import { LineChartComponent } from './charts/line-chart/line-chart.component';
+import { PieChartComponent } from './charts/pie-chart/pie-chart.component';
+import { RadarChartComponent } from './charts/radar-chart/radar-chart.component';
+import { DoughnutChartComponent } from './charts/doughnut-chart/doughnut-chart.component';
 
 
 @NgModule({
@@ -51,11 +60,18 @@ import { CardInputsComponent } from './card/card-inputs/card-inputs.component';
     AccountCreateComponent,
     AccountListComponent,
     CardRepaymentComponent,
-    CardInputsComponent
+    CardInputsComponent,
+    BarChartComponent,
+    BubbleChartComponent,
+    LineChartComponent,
+    PieChartComponent,
+    RadarChartComponent,
+    DoughnutChartComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ChartsModule,
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
@@ -70,6 +86,7 @@ import { CardInputsComponent } from './card/card-inputs/card-inputs.component';
     MatListModule,
     MatIconModule,
     HttpClientModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

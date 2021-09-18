@@ -1,17 +1,15 @@
 
-
-
 import { Component, OnInit, OnDestroy, OnChanges } from '@angular/core';
 import { FormGroup, FormsModule } from '@angular/forms';
 import * as moment from 'moment';
-
-
-
-
+import { Finance } from 'financejs';
 import { Subscription } from 'rxjs';
 import { Card } from '../card.model';
 import { CardsService } from '../card.service';
 
+
+import { ChartDataSets, ChartOptions } from 'chart.js';
+import { Color, Label } from 'ng2-charts';
 
 @Component({
   selector: 'app-card-inputs',
@@ -19,7 +17,6 @@ import { CardsService } from '../card.service';
   styleUrls: ['./card-inputs.component.css']
 })
 export class CardInputsComponent implements OnInit, OnDestroy {
-
   cards: Card[] = [];
   utilization: number;
   totalLimit = 0;
@@ -29,14 +26,22 @@ export class CardInputsComponent implements OnInit, OnDestroy {
   estimatedInterest = 0;
   isLoading = false;
   private cardsSub: Subscription;
-
+  finance = new Finance();
   private netMonthlyIncome = 4500;
   private amount = 10;
   private monthlyPayment = 450;
   private number_of_payments_snowball = 0;
   total_interest = 0;
-  private payoff_date = moment().format('YYYY MM DD');
+  pay_down_schedule = [];
 
+  lineChartData: ChartDataSets[] = [{ data: this.pay_down_schedule, label: 'Pay Down Schedule' }];
+  lineChartLabels: Label[] = [];
+  lineChartOptions = { responsive: true };
+  lineChartColors: Color[] = [{ borderColor: 'black', backgroundColor: 'rgba(107, 168, 237,0.28)' }];
+  lineChartLegend = true;
+  lineChartPlugins = [];
+  lineChartType = 'line';
+  payoff_date: string;
 
   constructor(public cardsService: CardsService) { }
 
@@ -50,9 +55,6 @@ export class CardInputsComponent implements OnInit, OnDestroy {
         this.calculateNumberOfPaymentsSnowball();
         this.calculateUtilization();
       });
-
-
-
   }
 
   onDelete(cardId: string) {
@@ -63,8 +65,34 @@ export class CardInputsComponent implements OnInit, OnDestroy {
     this.cardsSub.unsubscribe();
   }
 
-  calculateInterest(principal, time, rate, period) {
+  refreshChart() {
+    if (this.number_of_payments_snowball < 1000) {
+      this.lineChartData = [
+        {
+          data: this.pay_down_schedule, label: 'Pay Down Schedule'
+        },
+      ];
 
+      const temp_list = [];
+
+      for (let index = 1; index < this.number_of_payments_snowball; index++) {
+        const endDateMoment = moment();
+        endDateMoment.add(index, 'months');
+        temp_list.push(endDateMoment.format(' MMM, YYYY'));
+      }
+
+      this.lineChartLabels = temp_list;
+    } else {
+      this.lineChartData = [{ data: [], label: 'Too Many Data Points' }];
+      this.lineChartLabels = [];
+
+    }
+
+
+  }
+
+
+  calculateInterest(principal, time, rate, period) {
     const compoundInterest = (p, t, r, n) => {
       const amount = p * (Math.pow((1 + (r / n)), (n * t)));
       const interest = amount - p;
@@ -76,7 +104,6 @@ export class CardInputsComponent implements OnInit, OnDestroy {
 
   compoundInterest(principal, annual_rate, n_times, t_years) {
     return principal * (Math.pow(1 + annual_rate / n_times, n_times * t_years) - 1);
-
   }
 
   calculateUtilization() {
@@ -111,59 +138,77 @@ export class CardInputsComponent implements OnInit, OnDestroy {
     this.calculateInputAmount();
   }
 
-
-
   // Every month cards gain interest
   calculateNumberOfPaymentsSnowball() {
-    // deep copy of cards
-    const cardsCopy = this.cards.map(a => ({ ...a }));
-    let number_of_payments_snowball = 0;
+
+    // interim variables
+    let number_of_payments_snowball = 1;
     let payment = this.monthlyPayment;
     let total_interest = 0;
+    const pay_down_schedule = [];
+
+    // deep copy of cards, then sort smallest balance to smallest
+    const cardsCopy = this.cards.map(a => ({ ...a }));
     cardsCopy.sort((a, b) => (a.balance > b.balance) ? 1 : -1);
 
-    function incrementInterest() {
-      let interest_accumulated = 0;
-      cardsCopy.forEach(card => {
-        interest_accumulated += (card.balance * card.interest / 12);
-        card.balance += (card.balance * card.interest / 12);
-      });
-      if (interest_accumulated > payment) {
-        total_interest = 1 / 0;
-        return (true);
-      }
-      total_interest += interest_accumulated;
-
-
-    }
-
+    // loop through copied cards
     cardsCopy.forEach(card => {
+      // loop of unspecified length until card is balance 0
       while (card.balance > 0) {
+        // ensure payment is smaller then balance
         if (card.balance > payment) {
-          console.log(card.name + ' balance is ' + card.balance);
-          console.log(payment);
+          // decrease card balance.
           card.balance -= payment;
+          // in case payment is not full monthly amount reset now
           payment = this.monthlyPayment;
+          // move forward one cycle (month)
           number_of_payments_snowball++;
+          // increments interest on all cards in copy by 1 month
           if (incrementInterest()) {
-            number_of_payments_snowball = 1 / 0;
+            // in case payments will never outpace interest
+            number_of_payments_snowball = Infinity;
             break;
-          };
+          }
         } else {
-          payment = payment - card.balance;
+          // decrease payment
+          payment -= card.balance;
+          // wipes balance
           card.balance = 0;
-          console.log(card.balance);
         }
       }
-
     });
-    number_of_payments_snowball++;
+
+    function incrementInterest() {
+      // temp value to hold interest accumulated in this run
+      let interest_accumulated = 0;
+      let total_balance = 0;
+      // cycle through all cards
+      cardsCopy.forEach(card => {
+        const interest = (card.balance * card.interest / 12);
+        // add interest for total and card balance
+        interest_accumulated += interest;
+        card.balance += interest;
+        total_balance += card.balance;
+      });
+      // check that payment never is enough
+      if (interest_accumulated > payment) {
+        total_interest = Infinity;
+        return (true);
+      }
+      // used to update total interest property
+      total_interest += interest_accumulated;
+      pay_down_schedule.push(total_balance.toFixed(2));
+    }
+
     const startDate = new Date();
-    const endDateMoment = moment(startDate); // moment(...) can also be used to parse dates in string format
+    const endDateMoment = moment(startDate);
     endDateMoment.add(number_of_payments_snowball, 'months');
-    this.payoff_date = endDateMoment.format('YYYY MM DD');
+    this.payoff_date = endDateMoment.format('MMMM DD, YYYY');
     this.total_interest = total_interest;
+    this.pay_down_schedule = pay_down_schedule;
+    console.log(this.pay_down_schedule);
     this.number_of_payments_snowball = number_of_payments_snowball;
+    this.refreshChart();
 
   }
 

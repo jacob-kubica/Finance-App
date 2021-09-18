@@ -1,40 +1,38 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap } from "@angular/router";
+import { Component, OnInit } from "@angular/core";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 
-import { BillsService } from '../bill.service';
-import { Bill } from '../bill.model';
-import { mimeType } from './mime-type.validator';
+import { Bill } from "../bill.model";
+import { BillsService } from "../bill.service";
+import { mimeType } from "./mime-type.validator";
 
 @Component({
-  selector: 'app-bill-create',
-  templateUrl: './bill-create.component.html',
-  styleUrls: ['./bill-create.component.css']
+  selector: "app-bill-create",
+  templateUrl: "./bill-create.component.html",
+  styleUrls: ["./bill-create.component.css"],
 })
 export class BillCreateComponent implements OnInit {
-  enteredTitle = '';
-  enteredContent = '';
   bill: Bill;
   isLoading = false;
   form: FormGroup;
   imagePreview: string;
-  private mode = 'create';
+  private mode = "create";
   private billId: string;
 
   constructor(
     public billsService: BillsService,
     public route: ActivatedRoute
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.form = new FormGroup({
       title: new FormControl(null, {
-        validators: [Validators.required, Validators.minLength(3)]
+        validators: [Validators.required, Validators.minLength(3)],
       }),
       content: new FormControl(null, { validators: [Validators.required] }),
       image: new FormControl(null, {
         validators: [Validators.required],
-        asyncValidators: [mimeType]
+        asyncValidators: [mimeType],
       }),
       name: new FormControl(null),
       description: new FormControl(null),
@@ -42,14 +40,14 @@ export class BillCreateComponent implements OnInit {
       limit: new FormControl(null),
       dueDate: new FormControl(null),
       institution: new FormControl(null),
-      balance: new FormControl(null)
+      balance: new FormControl(null),
     });
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
-      if (paramMap.has('billId')) {
-        this.mode = 'edit';
-        this.billId = paramMap.get('billId');
+      if (paramMap.has("billId")) {
+        this.mode = "edit";
+        this.billId = paramMap.get("billId");
         this.isLoading = true;
-        this.billsService.getBill(this.billId).subscribe(billData => {
+        this.billsService.getBill(this.billId).subscribe((billData) => {
           this.isLoading = false;
           this.bill = {
             id: billData._id,
@@ -62,7 +60,7 @@ export class BillCreateComponent implements OnInit {
             institution: billData.institution,
             balance: billData.balance,
             content: billData.content,
-            imagePath: billData.imagePath
+            imagePath: billData.imagePath,
           };
           this.form.setValue({
             title: this.bill.title,
@@ -74,11 +72,11 @@ export class BillCreateComponent implements OnInit {
             dueDate: this.bill.dueDate,
             institution: this.bill.institution,
             balance: this.bill.balance,
-            image: this.bill.imagePath
+            image: this.bill.imagePath,
           });
         });
       } else {
-        this.mode = 'create';
+        this.mode = "create";
         this.billId = null;
       }
     });
@@ -87,7 +85,7 @@ export class BillCreateComponent implements OnInit {
   onImagePicked(event: Event) {
     const file = (event.target as HTMLInputElement).files[0];
     this.form.patchValue({ image: file });
-    this.form.get('image').updateValueAndValidity();
+    this.form.get("image").updateValueAndValidity();
     const reader = new FileReader();
     reader.onload = () => {
       this.imagePreview = reader.result as string;
@@ -100,7 +98,7 @@ export class BillCreateComponent implements OnInit {
       return;
     }
     this.isLoading = true;
-    if (this.mode === 'create') {
+    if (this.mode === "create") {
       this.billsService.addBill(
         this.form.value.title,
         this.form.value.content,

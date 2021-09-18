@@ -14,8 +14,8 @@ mat-spinner {
 }
 
 .fincard__image {
-  width: 400px;
-  height: 252px;
+  max-width: 400px;
+  max-height: 252px;
 }
 
 .fincard__description {
@@ -25,4 +25,37 @@ mat-spinner {
 .fincard__info {
   list-style: none;
   text-align: left;
+}
+
+.fincard__display {
+  display: grid;
+  grid-gap: 1em;
+}
+
+
+
+
+
+@media (min-aspect-ratio: 1/5) {
+  .fincard__display {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-aspect-ratio: 3/5) {
+  .fincard__display {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media (min-aspect-ratio: 5/5) {
+  .fincard__display {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+
+@media (min-aspect-ratio: 8/5) {
+  .fincard__display {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  }
 }
