@@ -4,15 +4,15 @@
     <mat-expansion-panel-header>
       {{ bill.title }}
     </mat-expansion-panel-header>
-    <div class="bill-image">
-      <img [src]="bill.imagePath" [alt]="bill.title">
-    </div>
-    <div>{{ bill.institution}}</div>
-    <ul>
-      <li>Due on {{ bill.dueDate | date : 'fullDate'}}</li>
-      <li>{{bill.balance}}</li>
-      <li>{{ bill.description }}</li>
-    </ul>
+    <span>
+      <img [src]="bill.imagePath" [alt]="bill.title" class="bill-image">
+    </span>
+    <span>
+      <h3>
+        {{bill.amount | currency}} is due on {{ bill.dueDate | date : 'fullDate'}} to {{bill.institution}}
+      </h3>
+      {{ bill.description }}
+    </span>
     <mat-action-row>
       <a mat-button color="primary" [routerLink]="['/bill/edit', bill.id]">EDIT</a>
       <button mat-button color="warn" (click)="onDelete(bill.id)">DELETE</button>

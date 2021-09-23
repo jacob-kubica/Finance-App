@@ -18,7 +18,32 @@ export class BillCreateComponent implements OnInit {
   imagePreview: string;
   private mode = "create";
   private billId: string;
-
+  categories = [
+    "Investments",
+    "Bill & Utilities",
+    "Fee & Charges",
+    "Business Services",
+    "Alcohol",
+    "Food & Dining",
+    "Service & Parts",
+    "Auto & Transport",
+    "Motorcycle",
+    "Insurance",
+    "Education",
+    "Health & Fitness",
+    "Entertainment",
+    "Shopping",
+    "Rent",
+  ];
+  frequencies = [
+    "daily",
+    "biweekly",
+    "monthly",
+    "quarterly",
+    "biannaul",
+    "annual",
+  ];
+  paymentMethods = ["Amex", "Visa", "Mastercard", "Cash"];
   constructor(
     public billsService: BillsService,
     public route: ActivatedRoute
@@ -29,18 +54,17 @@ export class BillCreateComponent implements OnInit {
       title: new FormControl(null, {
         validators: [Validators.required, Validators.minLength(3)],
       }),
-      content: new FormControl(null, { validators: [Validators.required] }),
+      amount: new FormControl(null),
+      description: new FormControl(null),
+      institution: new FormControl(null),
+      category: new FormControl(null),
+      frequency: new FormControl(null),
+      dueDate: new FormControl(null),
+      paymentMethod: new FormControl(null),
       image: new FormControl(null, {
         validators: [Validators.required],
         asyncValidators: [mimeType],
       }),
-      name: new FormControl(null),
-      description: new FormControl(null),
-      interest: new FormControl(null),
-      limit: new FormControl(null),
-      dueDate: new FormControl(null),
-      institution: new FormControl(null),
-      balance: new FormControl(null),
     });
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has("billId")) {
@@ -52,26 +76,24 @@ export class BillCreateComponent implements OnInit {
           this.bill = {
             id: billData._id,
             title: billData.title,
-            name: billData.name,
+            amount: billData.amount,
             description: billData.description,
-            interest: billData.interest,
-            limit: billData.limit,
-            dueDate: billData.dueDate,
             institution: billData.institution,
-            balance: billData.balance,
-            content: billData.content,
+            category: billData.category,
+            frequency: billData.frequency,
+            dueDate: billData.dueDate,
+            paymentMethod: billData.paymentMethod,
             imagePath: billData.imagePath,
           };
           this.form.setValue({
             title: this.bill.title,
-            content: this.bill.content,
-            name: this.bill.name,
+            amount: this.bill.amount,
             description: this.bill.description,
-            interest: this.bill.interest,
-            limit: this.bill.limit,
-            dueDate: this.bill.dueDate,
             institution: this.bill.institution,
-            balance: this.bill.balance,
+            category: this.bill.category,
+            frequency: this.bill.frequency,
+            dueDate: this.bill.dueDate,
+            paymentMethod: this.bill.paymentMethod,
             image: this.bill.imagePath,
           });
         });
@@ -101,28 +123,26 @@ export class BillCreateComponent implements OnInit {
     if (this.mode === "create") {
       this.billsService.addBill(
         this.form.value.title,
-        this.form.value.content,
-        this.form.value.name,
+        this.form.value.amount,
         this.form.value.description,
-        this.form.value.interest,
-        this.form.value.limit,
-        this.form.value.dueDate,
         this.form.value.institution,
-        this.form.value.balance,
+        this.form.value.category,
+        this.form.value.frequency,
+        this.form.value.dueDate,
+        this.form.value.paymentMethod,
         this.form.value.image
       );
     } else {
       this.billsService.updateBill(
         this.billId,
         this.form.value.title,
-        this.form.value.content,
-        this.form.value.name,
+        this.form.value.amount,
         this.form.value.description,
-        this.form.value.interest,
-        this.form.value.limit,
-        this.form.value.dueDate,
         this.form.value.institution,
-        this.form.value.balance,
+        this.form.value.category,
+        this.form.value.frequency,
+        this.form.value.dueDate,
+        this.form.value.paymentMethod,
         this.form.value.image
       );
     }

@@ -1,49 +1,60 @@
 <mat-card>
-    <mat-spinner *ngIf="isLoading"></mat-spinner>
-    <form [formGroup]="form" (submit)="onSaveBill()" *ngIf="!isLoading">
-      <mat-form-field>
-        <input matInput type="text" formControlName="title" placeholder="Bill Title">
-        <mat-error *ngIf="form.get('title').invalid">Please enter a bill title.</mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <input type="text" matInput formControlName="name" placeholder="name">
-        <mat-error *ngIf="form.get('name').invalid"></mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <input type="text" matInput formControlName="description" placeholder="description">
-        <mat-error *ngIf="form.get('description').invalid"></mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <input type="number" matInput formControlName="interest" placeholder="interest">
-        <mat-error *ngIf="form.get('interest').invalid"></mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <input type="number" matInput formControlName="limit" placeholder="limit">
-        <mat-error *ngIf="form.get('limit').invalid"></mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <input type="date" matInput formControlName="dueDate" placeholder="dueDate">
-        <mat-error *ngIf="form.get('dueDate').invalid"></mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <input type="text" matInput formControlName="institution" placeholder="institution">
-        <mat-error *ngIf="form.get('institution').invalid"></mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <input type="number" matInput formControlName="balance" placeholder="balance">
-        <mat-error *ngIf="form.get('balance').invalid"></mat-error>
-      </mat-form-field>
-      <div>
-        <button mat-stroked-button type="button" (click)="filePicker.click()">Pick Image</button>
-        <input type="file" #filePicker (change)="onImagePicked($event)">
-      </div>
-      <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && form.get('image').valid">
-        <img [src]="imagePreview" [alt]="form.value.title">
-      </div>
-      <mat-form-field>
-        <textarea matInput rows="4" formControlName="content" placeholder="Bill Content"></textarea>
-        <mat-error *ngIf="form.get('content').invalid">Please enter a bill title.</mat-error>
-      </mat-form-field>
-      <button mat-raised-button color="accent" type="submit">Save Bill</button>
-    </form>
-  </mat-card>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <form [formGroup]="form" (submit)="onSaveBill()" *ngIf="!isLoading">
+    <!-- Bill Title -->
+    <mat-form-field>
+      <input matInput type="text" formControlName="title" placeholder="Bill Title">
+      <mat-error *ngIf="form.get('title').invalid">Please enter a bill title.</mat-error>
+    </mat-form-field>
+    <!-- Amount -->
+    <mat-form-field>
+      <input type="number" matInput placeholder="Amount" formControlName="amount">
+    </mat-form-field>
+    <!-- Service Description -->
+    <mat-form-field>
+      <input matInput type="text" placeholder="Service Description" formControlName="description">
+    </mat-form-field>
+    <!-- Institution -->
+    <mat-form-field>
+      <input type="text" matInput placeholder="Institution" formControlName="institution">
+    </mat-form-field>
+    <!-- Category -->
+    <mat-form-field>
+      <mat-select placeholder="Category" formControlName="category">
+        <mat-option *ngFor="let category of categories" [value]="category">
+          {{category}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <!-- Frequency -->
+    <mat-form-field>
+      <mat-select placeholder="Frequency" formControlName="frequency">
+        <mat-option *ngFor="let frequency of frequencies" [value]="frequency">
+          {{frequency}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <!-- Due Date -->
+    <mat-form-field>
+      <input type="date" matInput formControlName="dueDate" placeholder="Due Date" formControlName="dueDate">
+      <mat-error *ngIf="form.get('dueDate').invalid"></mat-error>
+    </mat-form-field>
+    <!-- Payment Method -->
+    <mat-form-field>
+      <mat-select placeholder="Payment Method" formControlName="paymentMethod">
+        <mat-option *ngFor="let paymentMethod of paymentMethods" [value]="paymentMethod">
+          {{paymentMethod}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <!-- Logo -->
+    <div>
+      <button mat-stroked-button type="button" (click)="filePicker.click()">Pick Image</button>
+      <input type="file" #filePicker (change)="onImagePicked($event)">
+    </div>
+    <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && form.get('image').valid">
+      <img [src]="imagePreview" [alt]="form.value.title">
+    </div>
+    <button mat-raised-button color="accent" type="submit">Save Bill</button>
+  </form>
+</mat-card>

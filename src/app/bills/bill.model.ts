@@ -1,13 +1,12 @@
 export interface Bill {
-    id: string;
-    title: string;
-    content: string;
-    name: string;
-    description: string;
-    interest: number;
-    limit: number;
-    dueDate: Date;
-    institution: string;
-    balance: number;
-    imagePath: string;
+  id: string;
+  title: string;
+  amount: number;
+  description: string;
+  institution: string;
+  category: string;
+  frequency: string;
+  dueDate: Date;
+  paymentMethod: string;
+  imagePath: string;
 }
