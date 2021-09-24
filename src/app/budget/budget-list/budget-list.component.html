@@ -1,1 +1,25 @@
-<p>budget-list works!</p>
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<mat-accordion multi="true" *ngIf="budgets.length > 0 && !isLoading">
+  <mat-expansion-panel *ngFor="let budget of budgets">
+    <mat-expansion-panel-header>
+      {{ budget.budgetItem }}
+    </mat-expansion-panel-header>
+    <span>
+      <ul>
+        <li>{{budget.budgetItem}}</li>
+        <li>{{budget.budgetCategory}}</li>
+        <li>{{budget.contribution | currency:'CAD'}}</li>
+        <li>{{budget.exemptFromRecalculation}}</li>
+        <li>{{budget.fixedPriceValue | currency:'CAD'}}</li>
+        <li>{{budget._id}}</li>
+        <li>{{budget.percentage |  percent}}</li>
+        <li>{{budget.percentageCategory | percent}}</li>
+      </ul>
+    </span>
+    <mat-action-row>
+      <a mat-button color="primary" [routerLink]="['/budget/edit', budget._id]">EDIT</a>
+      <button mat-button color="warn" (click)="onDelete(budget._id)">DELETE</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>
+<p class="info-text mat-body-1" *ngIf="budgets.length <= 0 && !isLoading">No budgets added yet!</p>

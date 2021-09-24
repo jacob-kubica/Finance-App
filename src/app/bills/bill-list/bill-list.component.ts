@@ -1,13 +1,13 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, OnDestroy, OnInit } from "@angular/core";
 
-import { Bill } from '../bill.model';
-import { BillsService } from '../bill.service';
+import { Bill } from "../bill.model";
+import { BillsService } from "../bill.service";
+import { Subscription } from "rxjs";
 
 @Component({
-  selector: 'app-bill-list',
-  templateUrl: './bill-list.component.html',
-  styleUrls: ['./bill-list.component.css']
+  selector: "app-bill-list",
+  templateUrl: "./bill-list.component.html",
+  styleUrls: ["./bill-list.component.css"],
 })
 export class BillListComponent implements OnInit, OnDestroy {
   // bills = [
@@ -19,12 +19,13 @@ export class BillListComponent implements OnInit, OnDestroy {
   isLoading = false;
   private billsSub: Subscription;
 
-  constructor(public billsService: BillsService) { }
+  constructor(public billsService: BillsService) {}
 
   ngOnInit() {
     this.isLoading = true;
     this.billsService.getBills();
-    this.billsSub = this.billsService.getBillUpdateListener()
+    this.billsSub = this.billsService
+      .getBillUpdateListener()
       .subscribe((bills: Bill[]) => {
         this.isLoading = false;
         this.bills = bills;
