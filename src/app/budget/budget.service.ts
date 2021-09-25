@@ -59,28 +59,24 @@ export class BudgetsService {
   getBudget(id: string) {
     return this.http.get<{
       _id: string;
-      title: string;
-      amount;
-      description: string;
-      institution: string;
-      category: string;
-      frequency: string;
-      dueDate: Date;
-      paymentMethod: string;
-      imagePath: string;
+      budgetItem: string;
+      budgetCategory: string;
+      percentage: number;
+      percentageCategory: number;
+      exemptFromRecalculation: boolean;
+      fixedPriceValue: number;
+      contribution: number;
     }>("http://localhost:8000/budgets/" + id);
   }
 
   addBudget(
-    title: string,
-    amount,
-    description: string,
-    institution: string,
-    category: string,
-    frequency: string,
-    dueDate,
-    paymentMethod: string,
-    image: File
+    budgetItem: string,
+    budgetCategory: string,
+    percentage: number,
+    percentageCategory: number,
+    exemptFromRecalculation: boolean,
+    fixedPriceValue: number,
+    contribution: number
   ) {
     // const budgetData = new FormData();
     // budgetData.append("title", title);
@@ -118,15 +114,13 @@ export class BudgetsService {
 
   updateBudget(
     id: string,
-    title: string,
-    amount,
-    description: string,
-    institution: string,
-    category: string,
-    frequency: string,
-    dueDate,
-    paymentMethod: string,
-    image: File | string
+    budgetItem: string,
+    budgetCategory: string,
+    percentage: number,
+    percentageCategory: number,
+    exemptFromRecalculation: boolean,
+    fixedPriceValue: number,
+    contribution: number
   ) {
     // let budgetData: Budget | FormData;
     // if (typeof image === "object") {

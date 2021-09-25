@@ -1,1 +1,16 @@
-<p>budget-create works!</p>
+<mat-card>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <form [formGroup]="form" (submit)="onSaveBudget()" *ngIf="!isLoading">
+    <!-- Budget Name -->
+    <mat-form-field>
+      <input matInput type="text" formControlName="budgetItem" placeholder="Budget Name">
+      <mat-error *ngIf="form.get('budgetItem').invalid">Please enter a budget name.</mat-error>
+    </mat-form-field>
+    <!-- Budget Category -->
+    <mat-form-field>
+      <input matInput type="text" formControlName="budgetCategory" placeholder="Budget Category">
+      <mat-error *ngIf="form.get('budgetCategory').invalid">Please enter a budget category.</mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="accent" type="submit">Save Budget</button>
+  </form>
+</mat-card>
