@@ -8,12 +8,9 @@
     </mat-form-field>
     <!-- Budget Category -->
     <mat-form-field>
-      <mat-select type="text" formControlName="budgetCategory" placeholder=" Budget Category">>
-        <mat-option value="primary">Primary</mat-option>
-        <mat-option value="accent">Accent</mat-option>
-        <mat-option value="warn">Warn</mat-option>
+      <mat-select type="text" formControlName="budgetCategory" placeholder=" Budget Category">
+        <mat-option *ngFor="let category of categories" [value]="category">{{category}}</mat-option>
       </mat-select>
-      <mat-error *ngIf="form.get('budgetCategory').invalid">Please enter a budget category.</mat-error>
     </mat-form-field>
     <!-- Percentage -->
     <mat-form-field>
