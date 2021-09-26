@@ -31,7 +31,7 @@ const routes: Routes = [
 
   { path: "budgets", component: BudgetListComponent },
   { path: "budgets/create", component: BudgetCreateComponent },
-  { path: "budgets/edit/:accountId", component: BudgetCreateComponent },
+  { path: "budgets/edit/:budgetId", component: BudgetCreateComponent },
 ];
 
 @NgModule({

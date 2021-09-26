@@ -123,66 +123,47 @@ export class BudgetsService {
     fixedPriceValue: number,
     contribution: number
   ) {
-    // let budgetData: Budget | FormData;
-    // if (typeof image === "object") {
-    //   budgetData = new FormData();
-    //   budgetData.append("id", id);
-    //   budgetData.append("title", title);
-    //   budgetData.append("amount", amount);
-    //   budgetData.append("description", description);
-    //   budgetData.append("institution", institution);
-    //   budgetData.append("category", category);
-    //   budgetData.append("frequency", frequency);
-    //   budgetData.append("dueDate", dueDate);
-    //   budgetData.append("paymentMethod", paymentMethod);
-    //   budgetData.append("image", image, title);
-    // } else {
-    //   budgetData = {
-    //     id: id,
-    //     title: title,
-    //     amount: amount,
-    //     description: description,
-    //     institution: institution,
-    //     category: category,
-    //     frequency: frequency,
-    //     dueDate: dueDate,
-    //     paymentMethod: paymentMethod,
-    //     imagePath: image,
-    //   };
-    // }
-    // this.http
-    //   .put("http://localhost:3000/api/budgets/" + id, budgetData)
-    //   .subscribe((response) => {
-    //     const updatedBudgets = [...this.budgets];
-    //     const oldBudgetIndex = updatedBudgets.findIndex((p) => p.id === id);
-    //     const budget: Budget = {
-    //       id: id,
-    //       title: title,
-    //       amount: amount,
-    //       description: description,
-    //       institution: institution,
-    //       category: category,
-    //       frequency: frequency,
-    //       dueDate: dueDate,
-    //       paymentMethod: paymentMethod,
-    //       imagePath: "",
-    //     };
-    //     updatedBudgets[oldBudgetIndex] = budget;
-    //     this.budgets = updatedBudgets;
-    //     this.budgetsUpdated.next([...this.budgets]);
-    //     this.router.navigate(["/"]);
-    //   });
+    const budgetData = {
+      budgetItem: budgetItem,
+      budgetCategory: budgetCategory,
+      percentage: percentage,
+      percentageCategory: percentageCategory,
+      exemptFromRecalculation: exemptFromRecalculation,
+      fixedPriceValue: fixedPriceValue,
+      contribution: contribution,
+    };
+    console.log("we are updating" + id);
+    this.http
+      .patch("http://localhost:8000/budgets/" + id, budgetData)
+      .subscribe((response) => {
+        const updatedBudgets = [...this.budgets];
+        const oldBudgetIndex = updatedBudgets.findIndex((p) => p._id === id);
+        const budget: Budget = {
+          _id: id,
+          budgetItem: budgetItem,
+          budgetCategory: budgetCategory,
+          percentage: percentage,
+          percentageCategory: percentageCategory,
+          exemptFromRecalculation: exemptFromRecalculation,
+          fixedPriceValue: fixedPriceValue,
+          contribution: contribution,
+        };
+        updatedBudgets[oldBudgetIndex] = budget;
+        this.budgets = updatedBudgets;
+        this.budgetsUpdated.next([...this.budgets]);
+        this.router.navigate(["/budgets"]);
+      });
   }
 
   deleteBudget(budgetId: string) {
-    // this.http
-    //   .delete("http://localhost:3000/api/budgets/" + budgetId)
-    //   .subscribe(() => {
-    //     const updatedBudgets = this.budgets.filter(
-    //       (budget) => budget.id !== budgetId
-    //     );
-    //     this.budgets = updatedBudgets;
-    //     this.budgetsUpdated.next([...this.budgets]);
-    //   });
+    this.http
+      .delete("http://localhost:8000/budgets/" + budgetId)
+      .subscribe(() => {
+        const updatedBudgets = this.budgets.filter(
+          (budget) => budget._id !== budgetId
+        );
+        this.budgets = updatedBudgets;
+        this.budgetsUpdated.next([...this.budgets]);
+      });
   }
 }
