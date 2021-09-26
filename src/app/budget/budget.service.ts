@@ -72,44 +72,45 @@ export class BudgetsService {
   addBudget(
     budgetItem: string,
     budgetCategory: string,
-    percentage: number,
-    percentageCategory: number,
-    exemptFromRecalculation: boolean,
-    fixedPriceValue: number,
-    contribution: number
+    percentage,
+    percentageCategory,
+    exemptFromRecalculation,
+    fixedPriceValue,
+    contribution
   ) {
-    // const budgetData = new FormData();
-    // budgetData.append("title", title);
-    // budgetData.append("amount", amount);
-    // budgetData.append("description", description);
-    // budgetData.append("institution", institution);
-    // budgetData.append("category", category);
-    // budgetData.append("frequency", frequency);
-    // budgetData.append("dueDate", dueDate);
-    // budgetData.append("paymentMethod", paymentMethod);
-    // budgetData.append("image", image, title);
-    // this.http
-    //   .post<{ message: string; budget: Budget }>(
-    //     "http://localhost:3000/api/budgets",
-    //     budgetData
-    //   )
-    //   .subscribe((responseData) => {
-    //     const budget: Budget = {
-    //       id: responseData.budget.id,
-    //       title: title,
-    //       amount: amount,
-    //       description: description,
-    //       institution: institution,
-    //       category: category,
-    //       frequency: frequency,
-    //       dueDate: dueDate,
-    //       paymentMethod: paymentMethod,
-    //       imagePath: responseData.budget.imagePath,
-    //     };
-    //     this.budgets.push(budget);
-    //     this.budgetsUpdated.next([...this.budgets]);
-    //     this.router.navigate(["/"]);
-    //   });
+    const budgetData = new FormData();
+    budgetData.append("budgetItem", budgetItem);
+    budgetData.append("budgetCategory", budgetCategory);
+    budgetData.append("percentage", percentage);
+    budgetData.append("percentageCategory", percentageCategory);
+    budgetData.append("exemptFromRecalculation", exemptFromRecalculation);
+    budgetData.append("fixedPriceValue", fixedPriceValue);
+    budgetData.append("contribution", contribution);
+    this.http
+      .post("http://localhost:8000/budgets", {
+        budgetItem: budgetItem,
+        budgetCategory: budgetCategory,
+        percentage: percentage,
+        percentageCategory: percentageCategory,
+        exemptFromRecalculation: exemptFromRecalculation,
+        fixedPriceValue: fixedPriceValue,
+        contribution: contribution,
+      })
+      .subscribe((responseData: string) => {
+        const budget: Budget = {
+          _id: responseData,
+          budgetItem: budgetItem,
+          budgetCategory: budgetCategory,
+          percentage: percentage,
+          percentageCategory: percentageCategory,
+          exemptFromRecalculation: exemptFromRecalculation,
+          fixedPriceValue: fixedPriceValue,
+          contribution: contribution,
+        };
+        this.budgets.push(budget);
+        this.budgetsUpdated.next([...this.budgets]);
+        this.router.navigate(["/budgets"]);
+      });
   }
 
   updateBudget(

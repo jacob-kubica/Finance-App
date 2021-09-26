@@ -2,6 +2,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import {
   MatButtonModule,
   MatCardModule,
+  MatCheckboxModule,
   MatDividerModule,
   MatExpansionModule,
   MatGridListModule,
@@ -117,6 +118,7 @@ import { WishListComponent } from "./wish/wish-list/wish-list.component";
     MatDividerModule,
     MatListModule,
     MatSelectModule,
+    MatCheckboxModule,
     MatIconModule,
     HttpClientModule,
   ],
